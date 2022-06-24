@@ -6,6 +6,8 @@ use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
+use App\Models\Tag;
+
 
 
 class PostController extends Controller
@@ -20,7 +22,8 @@ class PostController extends Controller
         $posts = Post::orderByDesc('id')->get();
         //dd($posts);
         $categories = Category::all();
-        return view('admin.posts.index', compact('posts','categories'));
+        $tags = Tag::all();
+        return view('admin.posts.index', compact('posts','categories','tags'));
     }
 
     /**

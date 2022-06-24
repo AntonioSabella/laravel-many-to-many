@@ -11,11 +11,22 @@
         <div class="metadata">
            <strong>Category</strong>: {{$post->category ? $post->category->name : 'Uncategorized'}}
         </div>
+        <div class="tags">
+       <strong>Tags</strong> :
+        @if(count($post->tags) > 0) 
+            @foreach($post->tags as $tag)
+                #{{$tag->name}}
+            @endforeach
+        @else 
+            <span>No tags</span>
+
+        @endif
+   
+         </div>
         <div class="content">
             {{$post->content}}
         </div>
     </div>
 </div>
-
 
 @endsection

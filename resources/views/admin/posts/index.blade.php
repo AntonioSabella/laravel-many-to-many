@@ -19,6 +19,7 @@
                 <th>Titolo</th>
                 <th>Slug</th>
                 <th>Category</th>
+                <th>Tag</th>
                 <th>Immagine</th>
                 <th>Azioni</th>
             </tr>
@@ -31,6 +32,8 @@
                 <td>{{$post->title}}</td>
                 <td>{{$post->slug}}</td>
                 <td>Category: {{ $post->category ? $post->category->name : 'Uncategorized'}}</td>
+                <td>Tags: {{ $post->tag ? $post->tag->name : 'Untagged'}}</td>
+
 
                 <td><img height="150" width='200' src="{{$post->cover_image}}" alt="Cover image {{$post->title}}"></td>
                 <td class='d-flex gap-1'>
