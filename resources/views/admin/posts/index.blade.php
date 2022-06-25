@@ -31,8 +31,16 @@
                 <td scope="row">{{$post->id}}</td>
                 <td>{{$post->title}}</td>
                 <td>{{$post->slug}}</td>
-                <td>Category: {{ $post->category ? $post->category->name : 'Uncategorized'}}</td>
-                <td>Tags: {{ $post->tag ? $post->tag->name : 'Untagged'}}</td>
+                <td><strong>Category</strong> : {{ $post->category ? $post->category->name : 'Uncategorized'}}</td>
+                <td><strong>Tags</strong>:
+                  @if(count($post->tags) > 0) 
+                    @foreach($post->tags as $tag)
+                     <span>#{{$tag->name}}</span>
+                    @endforeach
+                  @else 
+                    <span>No tags</span>
+                  @endif
+                </td>
 
 
                 <td><img height="150" width='200' src="{{$post->cover_image}}" alt="Cover image {{$post->title}}"></td>

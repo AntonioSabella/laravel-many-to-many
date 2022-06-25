@@ -34,7 +34,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories','tags'));
         
     }
 
@@ -58,7 +59,9 @@ class PostController extends Controller
 
 
         // Creazione della risorsa
-        Post::create($val_data);
+        $new_post = Post::create($val_data);
+        $new_post->tags()->attach($request->tags);
+
         // Redirezionamento all'index admin
         return redirect()->route('admin.posts.index')->with('message', 'Post Created Successfully');
     }
@@ -83,7 +86,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -106,6 +110,8 @@ class PostController extends Controller
         $val_data['slug'] = $slug;
         // Update della risorsa editata
         $post->update($val_data);
+        // Sincronizziamo i tags
+        $post->tags()->sync($request->tags);
 
         // Redirezionamento all'index admin
         return redirect()->route('admin.posts.index')->with('message', "$post->title updated successfully");

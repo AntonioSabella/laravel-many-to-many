@@ -17,15 +17,28 @@
         <small id="cover_imageHelper" class="text-muted">Inserisci l'immagine del post</small>
     </div>
     <div class="mb-4">
-     <label for="category_id">Categories</label>
-     <select class="form-control" name="category_id" id="category_id">
-        <option value="">Select a category</option>
-        @foreach($categories as $category)
-        <option value="{{$category->id}}">{{$category->name}}</option>
-        @endforeach
+        <label for="category_id">Categories</label>
+        <select class="form-control" name="category_id" id="category_id">
+            <option value="" disabled>Select a category</option>
+            @foreach($categories as $category)
+            <option value="{{$category->id}}">{{$category->name}}</option>
+            @endforeach
 
-     </select>
-</div>
+        </select>
+    </div>
+    <div class="mb-4">
+      <label for="tags" class="form-label">Tags</label>
+      <select multiple class="form-select" name="tags[]" id="tags" aria-label="tags">
+        <option value= "" disabled>Select a Tag</option>
+        @forelse ($tags as $tag)
+        <option value="{{$tag->id}}">{{$tag->name}}</option>
+        @empty
+        <option value="">No tags</option>
+
+        @endforelse
+   
+      </select>
+    </div>
     <div class="mb-4">
         <label for="content">Corpo</label>
         <textarea class="form-control  @error('content') is-invalid @enderror" name="content" id="content" rows="4">

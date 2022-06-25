@@ -15,7 +15,7 @@
        <strong>Tags</strong> :
         @if(count($post->tags) > 0) 
             @foreach($post->tags as $tag)
-                #{{$tag->name}}
+                <span>#{{$tag->name}}</span>
             @endforeach
         @else 
             <span>No tags</span>
