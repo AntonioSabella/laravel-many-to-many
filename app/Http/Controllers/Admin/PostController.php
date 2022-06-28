@@ -126,6 +126,21 @@ class PostController extends Controller
         $slug = Post::generateSlug($request->title);
         //dd($slug);
         $val_data['slug'] = $slug;
+
+        if ($request->hasfile('cover_image')) {
+            //validazione del file
+            $request->validate([
+                'cover_image' => 'nullable|image|max:500',
+            ]);
+            //cancellazione immagine precedente
+            Storage::delete($post->cover_image);
+            // salvataggio nel file system e recupero percorso
+            //ddd($reuqest->all());
+            $path = Storage::put('post_images', $request->cover_image);
+            //ddd($path);
+            // trasmettere il percorso all'array per il salvataggio della risorsa
+            $val_data['cover_image'] = $path;
+        }
         // Update della risorsa editata
         $post->update($val_data);
         // Sincronizziamo i tags
@@ -144,6 +159,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         // Cancellazione della risorsa
+        Storage::delete($post->cover_image);
         $post->delete();
         return redirect()->route('admin.posts.index')->with('message', "$post->title deleted successfully");
 
