@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -47,16 +48,33 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        //dd($request->all());
+        //ddd($request->all());
 
         // Validazione dati
         $val_data = $request->validated();
         // Generazione dello slug
         $slug = Post::generateSlug($request->title);
         $val_data['slug'] = $slug;
-/*         $val_data['category_id'] = $request->category_id;
+     /* $val_data['category_id'] = $request->category_id;
         dd($val_data); */
 
+        //Verificare che la richiesta contiene il file
+        //ddd($request->hasfile('cover_image'));
+
+        if ($request->hasfile('cover_image')) {
+            //validazione del file
+            $request->validate([
+                'cover_image' => 'nullable|image|max:500',
+            ]);
+            // salvataggio nel file system e recupero percorso
+            //ddd($reuqest->all());
+            $path = Storage::put('post_images', $request->cover_image);
+            //ddd($path);
+            // trasmettere il percorso all'array per il salvataggio della risorsa
+            $val_data['cover_image'] = $path;
+        }
+        
+        //ddd($val_data);
 
         // Creazione della risorsa
         $new_post = Post::create($val_data);

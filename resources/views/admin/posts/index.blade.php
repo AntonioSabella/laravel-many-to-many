@@ -43,7 +43,7 @@
                 </td>
 
 
-                <td><img height="150" width='200' src="{{$post->cover_image}}" alt="Cover image {{$post->title}}"></td>
+                <td><img height="200" width='300' src="{{asset('storage/' . $post->cover_image)}}" alt="{{$post->title}}"></td>
                 <td class='d-flex gap-1'>
                     <a class="btn btn-primary text-white btn-sm" href="{{route('admin.posts.show', $post->slug)}}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">

@@ -4,7 +4,7 @@
 
 <h2 class="py-4">Create a new Post</h2>
 @include('partials.errors')
-<form action="{{route('admin.posts.store')}}" method="post">
+<form action="{{route('admin.posts.store')}}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="mb-4">
         <label for="title">Titolo</label>
@@ -13,7 +13,7 @@
     </div>
     <div class="mb-4">
         <label for="cover_image">Immagine</label>
-        <input type="text" name="cover_image" id="cover_image" class="form-control  @error('cover_image') is-invalid @enderror" placeholder="Inserisci immagine" aria-describedby="cover_imageHelper" value="{{old('cover_image')}}">
+        <input type="file" name="cover_image" id="cover_image" class="form-control  @error('cover_image') is-invalid @enderror" placeholder="Inserisci immagine" aria-describedby="cover_imageHelper">
         <small id="cover_imageHelper" class="text-muted">Inserisci l'immagine del post</small>
     </div>
     <div class="mb-4">
