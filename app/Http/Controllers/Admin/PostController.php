@@ -8,6 +8,8 @@ use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\NewPostCreated;
+use Illuminate\Support\Facades\Mail;
 
 
 
@@ -79,6 +81,12 @@ class PostController extends Controller
         // Creazione della risorsa
         $new_post = Post::create($val_data);
         $new_post->tags()->attach($request->tags);
+        
+        //Metodo per mostrare la view della mail
+        //return(new NewPostCreated($new_post))->render();
+
+        //Invio della mail di prova mediante mailTrap
+        Mail::to('test@example.com')->send(new NewPostCreated($new_post));
 
         // Redirezionamento all'index admin
         return redirect()->route('admin.posts.index')->with('message', 'Post Created Successfully');
